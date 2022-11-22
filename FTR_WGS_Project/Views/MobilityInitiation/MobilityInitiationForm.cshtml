@@ -1,0 +1,603 @@
+﻿@model FTR_WGS_Project.ViewModels.MobilityInitiationViewModel
+
+
+@{
+    ViewBag.Title = "MobilityInitiationForm";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/Content/Buttons.css" />
+
+
+@*<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/eggplant/jquery-ui.css' rel='stylesheet'>*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+<div class="buttons">
+    <div class="action_btn">
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelDetails", "BasicInformation")'">BASIC INFORMATION</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelRequestHistory", "ManagerApproval")'">MANAGER APPROVAL</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("RequestStatusHistory", "StatusCheck")'">Status Check</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("MobilityInitiationForm", "MobilityInitiation")'">GLOBAL MOBILITY INITIATION</button>
+    </div>
+</div>
+
+<div id="label"><h2><b>Global Mobility Initiation Form</b></h2></div>
+
+
+@using (Html.BeginForm("MobilityInitiationForm", "MobilityInitiation", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group" style="margin-left: 120px; padding: 10px; width: 900px;">
+        @Html.LabelFor(m => m.TravelDetail.RequestNo, "Request No: ", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: center; margin-left: 250px ; margin-top: 6px; font-size: 18px" })
+        @Html.DropDownListFor(m => m.TravelDetail.RequestNo, new SelectList(ViewBag.TravelDetailList, "RequestNo", "RequestNo"), "------- SELECT -------", new { @id = "RequestNo", Style = "border-radius : 7px ; opacity:0.7 ; border: 2px solid black ; color: black ;font-weight:bold ; height:35px ; width:400px;background-color: lightgrey" })
+    </div>
+
+    <div style="border: 2px solid black; background-color: lightseagreen; border-radius: 8px"><h2 style="font-weight: bold; text-align: center">Assignment Details</h2></div>
+
+    <br />
+    <br />
+
+    <div>
+        <table class="table table-striped table-bordered" style="border:2px solid black">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.From_HomeCountry, "From (Home Country)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.From_HomeCountry, new { @Value = Model.Country.CountryName, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.From_HomeCountry, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.To_HostCountry, "To (Host Country)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.To_HostCountry, new { @class = "form-control", @id = "HostCountry", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.To_HostCountry, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.From_HomeCity, "From (Home City)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.From_HomeCity, new { @Value = Model.City.CityName, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.From_HomeCity, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.To_HostCity, "To (Host City)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.To_HostCity, new { @class = "form-control", @id = "HostCity", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.To_HostCity, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.From_GBU, "From (GBU)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.From_GBU, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.From_GBU, "", new { @class = "text-danger" })
+                </td>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.To_GBU, "To (GBU)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.To_GBU, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.To_GBU, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.From_LegalEntity, "From (Legal Entity)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.From_LegalEntity, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.From_LegalEntity, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.To_LegalEntity, "To (Legal Entity)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.To_LegalEntity, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.To_LegalEntity, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.From_Division, "From (Division)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.From_Division, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.From_Division, "", new { @class = "text-danger" })
+                </td>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.To_Division, "To (Division)")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.To_Division, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.To_Division, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <p style="font-weight:bold; color:darkgrey ; font-family:'Arial Rounded MT'">If this request concerns a new employee please indicate the country and city of residence prior to hire in the "Home" information (left hand column) and the new country and city of residence in the "Host" information (right hand column). If the meployee is a new hire but is not moving to join Worldline then the "Home" and "Host" information will be the same</p>
+    </div>
+
+    <div>
+        <table class="table table-striped table-bordered" style="border: 2px solid black; table-layout: fixed; width: 100%;">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.ExpectedStartDate, "Expected Start Date")</td>
+                <td>
+                    @Html.EditorFor(m => m.AssignmentDetail.ExpectedStartDate, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @readonly = "true", @id = "datepickerfrom" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ;color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ExpectedStartDate, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.ExpectedEndDate, "Expected End Date")</td>
+                <td>
+                    @Html.EditorFor(m => m.AssignmentDetail.ExpectedEndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @readonly = "true", @id = "datepickerto" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ;color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ExpectedEndDate, "", new { @class = "text-danger" })
+                </td>
+
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.Reason, "Reason For this Mobility Request")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Reason, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Reason, "", new { @class = "text-danger" })
+                </td>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.ReplacingEmployee, "Is this Employee replacing another internationally mobile employee ?")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.ReplacingEmployee, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ReplacingEmployee, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.ReportingTo, "Employee will be directly reporting to (please provide the exact position too):")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.ReportingTo, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ReportingTo, "", new { @class = "text-danger" })
+                </td>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.Review, "Performance review will be one by (please provide the exact position too):")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Review, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Review, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.FullTimeWork, "Will Employee work full time in host country ? ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.FullTimeWork, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.FullTimeWork, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.WorkingTime, "If Employee Not Full Time In Host Country then provide estimated work schedule OR provide an estimate of the percntage of time the employee will work in the host country : ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.WorkingTime, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.WorkingTime, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.EmploymentRelatioship, "Expected employment relationship in the host country : ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.EmploymentRelatioship, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.EmploymentRelatioship, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.Label("Why isn't a local employee being considered for this position ? (rationate to be used for potential Labour and Immigration law requirements")</td>
+                <td colspan="3">
+                    @Html.TextBox("Demo", "", new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <p style="font-weight:bold; color:darkgrey ; font-family:'Arial Rounded MT'">(*) This field is required, unless the employee is a new hire with no foreseeable end date to his/her employment, or an existing employee whose employment relationship is transferred to the host entity with no provison for return to the home entity. For an employee whose employment relationship is transferred to the host entity for limited period of time, please specify the end date.</p>
+    </div>
+
+    <div>
+        <table class="table table-striped table-bordered" style="border: 2px solid black; table-layout: fixed; width: 100%;">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen ; width:30%">@Html.LabelFor(m => m.AssignmentDetail.Role_HostCountry, "Role / Title in host country : ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Role_HostCountry, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Role_HostCountry, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.Role_Description, "Brief description of the role in the host country : ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Role_Description, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Role_Description, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.AnnualBaseSalary, "Annual Base Salary (amount and currency): ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.AnnualBaseSalary, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.AnnualBaseSalary, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.BearingCost_PersonName, "Name of Worldline entity bearing the costs in the host country :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.BearingCost_PersonName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.BearingCost_PersonName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.Cost_Center, "Worldline cost center bearing the costs :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Cost_Center, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Cost_Center, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">
+                    @Html.LabelFor(m => m.AssignmentDetail.ClientName, "Name of client for whom employee will be working (if applicable, otherwise specify NA) :")
+                </td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.ClientName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ClientName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.ProjectName, "Name of project on which employee will be working (if applicable, otherwise specify NA):")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.ProjectName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.ProjectName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.Activity, "Nature of the activity in the host country :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.Activity, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.Activity, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentDetail.WFMRequestId, "Worldline recruitment or WFM request ID (Igrasp/Roma/DSMS) - if applicable, otherwise specify NA :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentDetail.WFMRequestId, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentDetail.WFMRequestId, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br />
+
+    <div style="border: 2px solid black; background-color: lightseagreen; border-radius: 8px "><h2 style="font-weight: bold; text-align: center">Assignment Contacts</h2></div>
+
+    <br />
+    <br />
+
+    <div>
+        <table class="table table-striped table-bordered" style="border: 2px solid black; table-layout: fixed; width: 100%;">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen ; width:30%">@Html.LabelFor(m => m.AssignmentContact.BudgetHolder_Name, "Name of budget holder for this request :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.BudgetHolder_Name, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.BudgetHolder_Name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.BudgetHolder_Email, "Budget holder email address : ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.BudgetHolder_Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.BudgetHolder_Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Home_HrDirector_Name, "Home HR Director name :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Home_HrDirector_Name, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Home_HrDirector_Name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Home_HrDirector_Email, "Home HR Director email address :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Home_HrDirector_Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Home_HrDirector_Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Home_LineManager_Name, "Home line manager name :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Home_LineManager_Name, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Home_LineManager_Name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Home_LineManager_Email, "Home line manager email :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Home_LineManager_Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Home_LineManager_Email, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Host_HrDirector_Name, "Host HR Director name :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Host_HrDirector_Name, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Host_HrDirector_Name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Host_HrDirector_Email, "Host HR Director email address :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Host_HrDirector_Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Host_HrDirector_Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Host_LineManager_Name, "Host line manager name(if applicable, otherwise specify NA) :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Host_LineManager_Name, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Host_LineManager_Name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.AssignmentContact.Host_LineManager_Email, "Host line manager email(if applicable, otherwise specify NA) :")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AssignmentContact.Host_LineManager_Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.AssignmentContact.Host_LineManager_Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br />
+
+    <div style="border: 2px solid black; background-color: lightseagreen; border-radius: 8px "><h2 style="font-weight: bold; text-align: center">Employee and Family Information</h2></div>
+
+    <br />
+    <br />
+
+    <div>
+        <table class="table table-striped table-bordered" style="border:2px solid black">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.LastName, "Last Name")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.LastName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.LastName, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.FirstName, "First Name")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.FirstName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.FirstName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.DOB, "Date of Birth")</td>
+                <td>
+                    @Html.EditorFor(m => m.EmployeeFamilyInformation.DOB, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @id = "DOB" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ;color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.DOB, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Gender, "Gender")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Gender, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Gender, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Primary_Citizenship, "Primary Citizenship")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Primary_Citizenship, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Primary_Citizenship, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Secondary_Citizenship, "Secondary Citizenship")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Secondary_Citizenship, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Secondary_Citizenship, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.DASId, "Das Id Number")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.DASId, new { @Value = Model.Employee.DASId, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.DASId, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Email, "Employee email address")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Email, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.GCMHomeCountry, "GCM Level in home country")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.GCMHomeCountry, new { @Value = Model.GCM.GCMLevel, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.GCMHomeCountry, "", new { @class = "text-danger" })
+                </td>
+
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.GCMHostCountry, "GCM Level in host country")</td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.GCMHostCountry, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.GCMHostCountry, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <p style="font-weight:bold; color:darkgrey ; font-family:'Arial Rounded MT'">If this request concerns a new hire for Worldline then leave the field "DAS ID number" blank, and the GCM level should be the same in the Home and the Host.</p>
+    </div>
+
+    <br />
+
+    <div>
+        <table class="table table-striped table-bordered" style="border: 2px solid black; table-layout: fixed; width: 100%;">
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.FamilyStatus_HomeCountry, "Family status from a home country legal perspective? ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.FamilyStatus_HomeCountry, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.FamilyStatus_HomeCountry, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.FamilyStatus_HostCountry, "Family in the host country ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.FamilyStatus_HostCountry, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.FamilyStatus_HostCountry, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Partner_Location, "Where will employees spouse / partner be living whilst employee is in the host country? ")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Partner_Location, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Partner_Location, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.ChildName, "Child Name")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.ChildName, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.ChildName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.ChildDOB, "Child DOB")</td>
+                <td colspan="3">
+                    @Html.EditorFor(m => m.EmployeeFamilyInformation.ChildDOB, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @readonly = "true", @id = "childDOB" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ;color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.ChildDOB, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.ChildPrimaryCitizenship, "Primary Citizenship")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.ChildPrimaryCitizenship, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.ChildPrimaryCitizenship, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; background-color:lightseagreen">@Html.LabelFor(m => m.EmployeeFamilyInformation.Dependent_On_Tax, "Dependent(s) for tax purposes in the home country")</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.EmployeeFamilyInformation.Dependent_On_Tax, new { @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 1px solid black ; color:black ; font-weight:bold" })
+                    @Html.ValidationMessageFor(m => m.EmployeeFamilyInformation.Dependent_On_Tax, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+
+    <div style="border: 2px solid black; background-color: lightseagreen; border-radius: 8px "><h2 style="font-weight: bold; text-align: center">Confidentiality Requirements</h2></div>
+
+    <br />
+    <br />
+
+    <div style="border: 2px solid black; background-color: lightseagreen">
+        <p style="font-weight:bold; color:black ; font-family:'Arial Rounded MT'">Data provided in this form will be viewable by the GM SPOCs in the home and host countries, as well as GM team members via the Global Mobility platform. If you require more restrictive confidentiality measures, please describe your requirements below:</p>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" style="margin-left: 320px; width: 100px ;height: 50px; border-radius: 7px" />
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#RequestNo").change(function () {
+                if ($("#RequestNo").val() != "------- SELECT -------") {
+                    $.ajax({
+                        "url": "http://localhost:63501/MobilityInitiation/Details",
+                        "type": "POST",
+                        "dataType": "json",
+                        "contentType": "application/json; charset=utf-8",
+                        "data": JSON.stringify({
+                            RequestNo: $("#RequestNo").val()
+                        }),
+                        "success": function (result) {
+                            console.log(result);
+                            $('#HostCountry').val(result.Country.CountryName);
+                            $('#HostCity').val(result.TravelDetail.HostCity);
+                        },
+                        "error": function (xhr, status, error) {
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    $("#btnsubmit").prop("disabled", true);
+                }
+            });
+
+            $("#btnsubmit").prop("disabled", true);
+            $("#RequestNo").change(function () {
+                if ($("#RequestNo").val() != "------- SELECT -------") {
+                    $("#btnsubmit").prop("disabled", false);
+                }
+                else if ($("#RequestNo").val() == "------- SELECT -------") {
+                    $("#btnsubmit").prop("disabled", true);
+                }
+            });
+
+
+            $(function () {
+                $('#DOB').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    yearRange: '-60y:',
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: '-60y',
+                    maxDate: '0d'
+                });
+            });
+
+            $(function () {
+                $('#datepickerfrom').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    yearRange: '-1y:+60y',
+                    changeMonth: true,
+                    changeYear: true,
+                });
+            });
+
+            $(function () {
+                $('#datepickerto').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    yearRange: '-1y:+60y',
+                    changeMonth: true,
+                    changeYear: true,
+                });
+            });
+
+            $(function () {
+                $('#childDOB').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    yearRange: '-60y:',
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: '-60y',
+                    maxDate: '0d'
+                });
+            });
+        });
+
+    </script>
+
+}

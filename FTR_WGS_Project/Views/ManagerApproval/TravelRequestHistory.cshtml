@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FTR_WGS_Project.ViewModels.ManagerApprovalViewModel>
+
+@{
+    ViewBag.Title = "TravelRequestHistory";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/Content/Buttons.css" />
+
+
+@*<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/eggplant/jquery-ui.css' rel='stylesheet'>*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+<div class="buttons">
+    <div class="action_btn">
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelDetails", "BasicInformation")'">BASIC INFORMATION</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelRequestHistory", "ManagerApproval")'">MANAGER APPROVAL</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("RequestStatusHistory", "StatusCheck")'">STATUS CHECK</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("MobilityInitiationForm", "MobilityInitiation")'">GLOBAL MOBILITY INITIATION</button>
+    </div>
+</div>
+
+<div id="label"><h2><b>Approval Request History</b></h2></div>
+
+<table class="table table-striped table-hover table-bordered" style="border: 2px solid black; background-color:whitesmoke">
+    <tr style="background-color: lightseagreen; border: 2px solid black">
+        <th>Request No.</th>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Request Date</th>
+        <th>Status</th>
+        <th>Travel Details</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TravelDetail.RequestNo</td>
+            <td>@item.TravelDetail.EmpId</td>
+            <td>@item.TravelDetail.EmpName</td>
+            <td>@item.TravelDetail.RequestDate</td>
+            <td style="color:@item.Status">@item.TravelDetail.Status</td>
+            <td>
+                @Html.ActionLink("View Details", "ViewDetails", new { requestNo = item.TravelDetail.RequestNo })
+            </td>
+        </tr>
+    }
+</table>
+

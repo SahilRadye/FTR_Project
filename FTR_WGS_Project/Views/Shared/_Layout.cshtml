@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="height: 60px">
+            <div class="navbar-header">
+                <img src="https://cdn.cookielaw.org/logos/a1193491-22b8-424b-b694-15702547fbdb/801d1787-9693-44ca-9c8f-eb1275195361/91530d9a-0ba8-4ec0-bedf-cf49db8da706/Worldline-Mint-Horizontal.png" width="240" height="50" alt="" style="margin-top:8px">
+                @if (Session["empid"] != null)
+                {
+                    <button class="btn glyphicon glyphicon-log-out" type="button" style="margin-left: 780px; background-color: red; border:30px; height:40px; color:white; width: 100px" onclick="location.href='@Url.Action("Logout", "UserLogin")'">
+                        <span style="margin-top: -5px">Logout</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin-top:30px">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

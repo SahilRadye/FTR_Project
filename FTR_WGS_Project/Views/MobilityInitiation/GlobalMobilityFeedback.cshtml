@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "GlobalMobilityFeedback";
+}
+
+
+<h2 style="color: lightseagreen">@ViewBag.RequestNo</h2>
+<br/>
+<h3 style="color: lightseagreen">@ViewBag.Feedback</h3>
+
+<br/>
+<br/>
+<button type="button" style="border: 2px solid black; margin: 15px; color: whitesmoke; border-radius: 10px; width: 100px; height: 40px; background-color: lightseagreen; font-weight: bold; " onclick="location.href='@Url.Action("RequestStatusHistory", "StatusCheck")'">BACK</button>
+

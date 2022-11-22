@@ -1,0 +1,192 @@
+﻿@model FTR_WGS_Project.ViewModels.TravelDetailsViewModel
+
+@{
+    ViewBag.Title = "TravelDetails";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/Content/Buttons.css" />
+
+
+@*<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/eggplant/jquery-ui.css' rel='stylesheet'>*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+<div class="buttons">
+    <div class="action_btn">
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelDetails", "BasicInformation")'">BASIC INFORMATION</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("TravelRequestHistory", "ManagerApproval")'">MANAGER APPROVAL</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("RequestStatusHistory", "StatusCheck")'">STATUS CHECK</button>
+
+        <button class="btn" type="button" onclick="location.href='@Url.Action("MobilityInitiationForm", "MobilityInitiation")'">GLOBAL MOBILITY INITIATION</button>
+    </div>
+</div>
+
+<div id="label"><h2><b>Basic Travel Information</b></h2></div>
+
+@using (Html.BeginForm("TravelDetails", "BasicInformation", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.Label("Request No", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.TextBox("RequestNo", "", new { @class = "form-control", @readonly = "readonly", Style = "border-radius : 7px ; border: 2px solid black; background-color: lightgrey ; opacity:0.7" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Employee.EName, "Employee Name", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.Employee.EName, new { htmlAttributes = new { @class = "form-control", @Value = Model.Employee.EName, @readonly = "readonly", Style = "border-radius : 7px ;background-color: lightgrey ; opacity:0.7 ; border: 2px solid black ; color: black ;font-weight:bold" } })
+                @Html.ValidationMessageFor(m => m.Employee.EName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Employee.GCMId, "Employee GCM", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Employee.GCMId, new SelectList(ViewBag.GCMList, "GCMId", "GCMLevel"), "-- Please Select --", new { onchange = "document.getElementById('GCMId').submit()", Style = "border-radius : 7px ; opacity:0.7 ; border: 2px solid black ; color: black ;font-weight:bold ; height:35px ; width:400px" })
+                @Html.ValidationMessageFor(m => m.Employee.GCMId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Travel.TravelId, "Travel Type", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Travel.TravelId, new SelectList(ViewBag.TravelList, "TravelId", "TravelType"), "------- SELECT -------", new { onchange = "document.getElementById('TravelId').submit()", Style = "border-radius : 7px ; opacity:0.7 ; border: 2px solid black ; color: black ;font-weight:bold ; height:35px ; width:400px" })
+                @Html.ValidationMessageFor(m => m.Travel.TravelId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Country.CountryName, "Home Country", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Country.CountryName, new { @Value = Model.Country.CountryName, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 2px solid black ; color:black ; font-weight:bold" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TravelDetail.HostCountry, "Host Country", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TravelDetail.HostCountry, new SelectList(ViewBag.CountryList, "CountryId", "CountryName"), "------- SELECT -------", new { @id = "CountryName", Style = "border-radius : 7px ; opacity:0.7 ; border: 2px solid black ; color: black ; font-weight:bold ; height:35px ; width:400px; color:black" })
+                @Html.ValidationMessageFor(m => m.TravelDetail.HostCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.City.CityName, "Home City", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.City.CityName, new { @Value = Model.City.CityName, @class = "form-control", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 2px solid black ; color:black ; font-weight:bold" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TravelDetail.HostCity, "Host City", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.TravelDetail.HostCity, new { @class = "form-control", @id = "CityName", Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 2px solid black ; color:black ; ;font-weight:bold" })
+                @Html.ValidationMessageFor(m => m.TravelDetail.HostCity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TravelDetail.DateFrom, "Expected Start Date", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.TravelDetail.DateFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @readonly = "true", @id = "datepickerfrom" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 2px solid black ;color:black ; ;font-weight:bold" })
+                @Html.ValidationMessageFor(m => m.TravelDetail.DateFrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TravelDetail.DateTo, "Expected End Date", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.TravelDetail.DateTo, new { htmlAttributes = new { @class = "form-control", placeholder = "    /    /    ", @readonly = "true", @id = "datepickerto" }, Style = "border-radius : 7px ; background-color: whitesmoke ; opacity:0.7 ; border: 2px solid black ;color:black ; font-weight:bold" })
+                @Html.ValidationMessageFor(m => m.TravelDetail.DateTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TravelDetail.SendTo, "Send For Approval To", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TravelDetail.SendTo, new SelectList(ViewBag.EmpList, "EmpId", "EName"), "------- SELECT -------", new { onchange = "document.getElementById('EmpId').submit()", Style = "border-radius : 7px ; opacity:0.7 ; border: 2px solid black ; color: black ; font-weight:bold ; height:35px ; width:400px" })
+                @Html.ValidationMessageFor(m => m.TravelDetail.SendTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2", Style = "text-align: left" })
+            <div class="col-md-10">
+                @Html.TextBox("Status", "New Request", new { @class = "form-control", @readonly = "readonly", Style = "border-radius : 7px ; background-color: lightgrey ; opacity:0.7 ; border: 2px solid black ; color: black ; font-weight:bold" })
+            </div>
+        </div>
+
+        <br/>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-primary" style="background-color: lightseagreen"/>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                $('#datepickerfrom').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: '0d',
+                    //maxDate: '3m'
+                });
+            });
+
+
+            $(function () {
+                $('#datepickerto').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 1,
+                    changeMonth: true,
+                    changeYear: true
+                });
+            });
+
+
+            $("#datepickerfrom").change(function () {
+                startDate = $(this).datepicker('getDate');
+                $('#datepickerto').datepicker("option", "minDate", startDate);
+            });
+
+
+            $("#CityName").prop("disabled", true);
+            $("#CountryName").change(function () {
+                if ($("#CountryName").val() != "------- SELECT -------") {
+                    $("#CityName").prop("disabled", false);
+                }
+                else if ($("#CountryName").val() == "------- SELECT -------") {
+                    $("#CityName").prop("disabled", true);
+                }
+            });
+        });
+    </script>
+
+}
+

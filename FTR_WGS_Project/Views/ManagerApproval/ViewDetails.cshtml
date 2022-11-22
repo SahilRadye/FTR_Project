@@ -1,0 +1,68 @@
+﻿@model FTR_WGS_Project.ViewModels.TravelDetailsViewModel
+
+@{
+    ViewBag.Title = "ViewDetails";
+}
+
+<link rel="stylesheet" href="~/Content/Buttons.css" />
+
+<div id="label"><h2><b>Travel Request History</b></h2></div>
+
+<br />
+
+<div>
+    <table class="table table-striped" style="border: 2px solid black">
+        <tr>
+            <th>Request Number :</th>
+            <td>@Model.TravelDetail.RequestNo</td>
+        </tr>
+        <tr>
+            <th>Request Date :</th>
+            <td>@Model.TravelDetail.RequestDate</td>
+        </tr>
+        <tr>
+            <th>Employee Id :</th>
+            <td>@Model.TravelDetail.EmpId</td>
+        </tr>
+        <tr>
+            <th>Employee Name :</th>
+            <td>@Model.TravelDetail.EmpName</td>
+        </tr>
+        <tr>
+            <th>Host Country :</th>
+            <td>@Model.TravelDetail.HostCountry</td>
+        </tr>
+        <tr>
+            <th>Host City :</th>
+            <td>@Model.TravelDetail.HostCity</td>
+        </tr>
+        <tr>
+            <th>Travel Start Date :</th>
+            <td >@Model.TravelDetail.DateFrom</td>
+        </tr>
+        <tr>
+            <th>Travel End Date :</th>
+            <td>@Model.TravelDetail.DateTo</td>
+        </tr>
+        <tr>
+            <th>Status :</th>
+            <td>@Model.TravelDetail.Status</td>
+        </tr>
+    </table>
+    <br />
+
+    @if (Model.TravelDetail.Status == "New Request" && (@ViewBag.id != @Model.TravelDetail.EmpId))
+    {
+        <div class="buttons">
+            <div class="action_btn">
+                <button type="submit" value="Accept" class="btn1 btn-success" style="margin-left : 410px; width:100px; height:40px ; border:2px solid black ; border-radius:10px" onclick="location.href='@Url.Action("Accept", "ManagerApproval" , new { requestNo = Model.TravelDetail.RequestNo })'">Accept</button>
+                <button type="submit" id="Reject" value="Reject" class="btn1 btn-danger" style="margin: 0 5px; width: 100px; height: 40px; border: 2px solid black; border-radius: 10px " onclick="location.href='@Url.Action("Reject", "ManagerApproval" , new { requestNo = Model.TravelDetail.RequestNo })'">Reject</button>
+            </div>
+        </div>
+        <br />
+    }
+    <br />
+
+
+    <button type="button" style="border: 2px solid black; margin: 15px; color: whitesmoke; border-radius: 10px; width: 100px; height: 40px; background-color: lightseagreen" font-weight: bold; " onclick="location.href='@Url.Action("TravelRequestHistory", "ManagerApproval")'">BACK</button>
+</div>

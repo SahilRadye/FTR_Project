@@ -1,0 +1,34 @@
+﻿body {
+}
+
+
+.buttons .action_btn .btn {
+    /* border: 2px solid black;*/
+    margin: 15px 15px;
+    border-radius: 15px;
+    color: white;
+    width: 250px;
+    height: 60px;
+    background-color: lightseagreen;
+    font-weight: bold;
+    font-family: 'Arial Rounded MT';
+}
+
+#label {
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 20px;
+    background-image: linear-gradient(to right, #47beaa 0%, lightseagreen 100%);
+    background-color: lightseagreen;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.table tr th {
+    border-right: 2px solid black;
+}
+
+.table tr td {
+    padding-left: 30px;
+}

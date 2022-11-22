@@ -1,0 +1,46 @@
+﻿@model FTR_WGS_Project.ViewModels.UserLoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<link rel="stylesheet" href="~/Content/Login.css" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@using (Html.BeginForm("CheckingUser", "UserLogin", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    <section>
+        <div class="imgBx">
+            <img src="~/Content/themes/base/images/Chair.gif" />
+        </div>
+        <div class="contentBx">
+            <div class="formBx">
+                <img src="https://cdn.cookielaw.org/logos/a1193491-22b8-424b-b694-15702547fbdb/801d1787-9693-44ca-9c8f-eb1275195361/91530d9a-0ba8-4ec0-bedf-cf49db8da706/Worldline-Mint-Horizontal.png" width="240" height="50" alt="" style="margin-top: -70px; margin-left: 10px">
+                <h2>Login</h2>
+                <form>
+                    <b><span class="text-danger" style="font-weight:500; font-size:14px">@Html.ValidationSummary()</span></b>
+                    <div class="inputBx">
+                        @Html.LabelFor(m => m.UserLogin.UserName, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(u => u.UserLogin.UserName, new { @class = "form-control", Style = "border: 2px solid black;" })
+                        <span class="text-danger">@Html.ValidationMessageFor(u => u.UserLogin.UserName)</span>
+                    </div>
+                    <div class="inputBx">
+                        @Html.LabelFor(u => u.UserLogin.Password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.PasswordFor(u => u.UserLogin.Password, new { @class = "form-control", Style = "border: 2px solid black;" })
+                        <span class="text-danger">@Html.ValidationMessageFor(u => u.UserLogin.Password)</span>
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" value="Login" class="btn btn-primary" name="" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+}
+
+
